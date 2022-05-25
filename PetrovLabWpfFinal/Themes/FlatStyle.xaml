@@ -1,0 +1,87 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:Char x:Key="addSymbol">+</sys:Char>
+    
+    <Color x:Key="DefaultColor">#F0F0F0</Color>
+    <Color x:Key="HighlightColor">#E5E5E5</Color>
+    <Color x:Key="PressedColor">#D7D7D7</Color>
+    <Color x:Key="HighlightBorderColor">#404040</Color>
+    
+    <Color x:Key="DefaultEqualColor">#8EBFE2</Color>
+    <Color x:Key="HighlightEqualColor">#4A9BDD</Color>
+    <Color x:Key="PressedEqualColor">#0078D7</Color>
+
+    <SolidColorBrush x:Key="DefaultBrush" Color="{StaticResource DefaultColor}"/>
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}"/>
+    <SolidColorBrush x:Key="PressedBrush" Color="{StaticResource PressedColor}"/>
+    <SolidColorBrush x:Key="HighlightBorderBrush" Color="{StaticResource HighlightBorderColor}"/>
+
+    <SolidColorBrush x:Key="DefaultEqualBrush" Color="{StaticResource DefaultEqualColor}"/>
+    <SolidColorBrush x:Key="HighlightEqualBrush" Color="{StaticResource HighlightEqualColor}"/>
+    <SolidColorBrush x:Key="PressedEqualBrush" Color="{StaticResource PressedEqualColor}"/>
+
+    <!-- Flat Button Style -->
+    <Style TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource DefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FF688CAF"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="0">
+                        <ContentControl Content="{TemplateBinding Content}" FontSize="16" Foreground="Black" 
+                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HighlightBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource HighlightBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource PressedBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- End Button Style -->
+
+    <!-- Flat Equal Button Style -->
+    <Style x:Key="equalButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource DefaultEqualBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FF688CAF"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}" 
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="0">
+                        <ContentControl Content="{TemplateBinding Content}" FontSize="16" Foreground="Black" 
+                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource HighlightEqualBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource HighlightBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource PressedEqualBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- End Button Style -->
+</ResourceDictionary>

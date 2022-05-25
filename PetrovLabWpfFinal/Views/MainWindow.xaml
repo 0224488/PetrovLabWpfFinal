@@ -1,0 +1,147 @@
+﻿<Window x:Class="PetrovLabWpfFinal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:PetrovLabWpfFinal" 
+        Title="Calculator" Icon="pack://application:,,,/PetrovLabWpfFinal;component/Resources/calculator.png" 
+        Height="450" Width="450" ResizeMode="CanMinimize">
+    <Window.InputBindings>
+        <KeyBinding Key="NumPad1" Command="{Binding NumberPressCommand}" CommandParameter="1"/>
+        <KeyBinding Key="NumPad2" Command="{Binding NumberPressCommand}" CommandParameter="2"/>
+        <KeyBinding Key="NumPad3" Command="{Binding NumberPressCommand}" CommandParameter="3"/>
+        <KeyBinding Key="NumPad4" Command="{Binding NumberPressCommand}" CommandParameter="4"/>
+        <KeyBinding Key="NumPad5" Command="{Binding NumberPressCommand}" CommandParameter="5"/>
+        <KeyBinding Key="NumPad6" Command="{Binding NumberPressCommand}" CommandParameter="6"/>
+        <KeyBinding Key="NumPad7" Command="{Binding NumberPressCommand}" CommandParameter="7"/>
+        <KeyBinding Key="NumPad8" Command="{Binding NumberPressCommand}" CommandParameter="8"/>
+        <KeyBinding Key="NumPad9" Command="{Binding NumberPressCommand}" CommandParameter="9"/>
+        <KeyBinding Key="NumPad0" Command="{Binding NumberPressCommand}" CommandParameter="0"/>
+        
+        <KeyBinding Key="D1" Command="{Binding NumberPressCommand}" CommandParameter="1"/>
+        <KeyBinding Key="D2" Command="{Binding NumberPressCommand}" CommandParameter="2"/>
+        <KeyBinding Key="D3" Command="{Binding NumberPressCommand}" CommandParameter="3"/>
+        <KeyBinding Key="D4" Command="{Binding NumberPressCommand}" CommandParameter="4"/>
+        <KeyBinding Key="D5" Command="{Binding NumberPressCommand}" CommandParameter="5"/>
+        <KeyBinding Key="D6" Command="{Binding NumberPressCommand}" CommandParameter="6"/>
+        <KeyBinding Key="D7" Command="{Binding NumberPressCommand}" CommandParameter="7"/>
+        <KeyBinding Key="D8" Command="{Binding NumberPressCommand}" CommandParameter="8"/>
+        <KeyBinding Key="D9" Command="{Binding NumberPressCommand}" CommandParameter="9"/>
+        <KeyBinding Key="D0" Command="{Binding NumberPressCommand}" CommandParameter="0"/>
+
+        <KeyBinding Key="Esc" Command="{Binding NumberPressCommand}" CommandParameter="C"/>
+        <KeyBinding Key="Back" Command="{Binding DeleteSymbolCommand}"/>
+        <KeyBinding Key="OemComma" Command="{Binding NumberPressCommand}" CommandParameter=","/>
+        <KeyBinding Key="OemPlus" Command="{Binding BinaryOperationPressCommand}" CommandParameter="="/>
+        <KeyBinding Key="OemMinus" Command="{Binding BinaryOperationPressCommand}" 
+                    CommandParameter="{StaticResource substractSymbol}"/>
+        <KeyBinding Key="D5" Modifiers="Shift" Command="{Binding BinaryOperationPressCommand}" 
+                    CommandParameter="{StaticResource percentSymbol}"/>
+        <KeyBinding Key="D8" Modifiers="Shift" Command="{Binding BinaryOperationPressCommand}" 
+                    CommandParameter="{StaticResource multipleSymbol}"/>
+        <KeyBinding Key="OemPlus" Modifiers="Shift" Command="{Binding BinaryOperationPressCommand}" 
+                    CommandParameter="{StaticResource addSymbol}"/>
+
+        <KeyBinding Key="Add" Command="{Binding BinaryOperationPressCommand}" CommandParameter="{StaticResource addSymbol}"/>
+        <KeyBinding Key="Subtract" Command="{Binding BinaryOperationPressCommand}" CommandParameter="{StaticResource substractSymbol}"/>
+        <KeyBinding Key="Multiply" Command="{Binding BinaryOperationPressCommand}" CommandParameter="{StaticResource multipleSymbol}"/>
+        <KeyBinding Key="Divide" Command="{Binding BinaryOperationPressCommand}" CommandParameter="{StaticResource divideSymbol}"/>
+    </Window.InputBindings>
+    <Window.Resources>
+        <!--<vm:MainWindowViewModel x:Key="viewModel"/>-->
+        <Color x:Key="funcBackColor">#FFDDDDDD</Color>
+        <SolidColorBrush x:Key="funcBackBrush" Color="{StaticResource funcBackColor}"/>
+
+        <Style x:Key="numberButtonStyle" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Command" Value="{Binding NumberPressCommand}"/>
+            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"/>
+        </Style>
+
+        <Style x:Key="binaryOpButtonStyle" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource funcBackBrush}"/>
+            <Setter Property="Command" Value="{Binding BinaryOperationPressCommand}"/>
+            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"/>
+        </Style>
+
+        <Style x:Key="unaryOpButtonStyle" BasedOn="{StaticResource {x:Type Button}}" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource funcBackBrush}"/>
+            <Setter Property="Command" Value="{Binding UnaryOperationPressCommand}"/>
+            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"/>
+        </Style>
+
+        <Color x:Key="outlineColor">#FF688CAF</Color>
+        <SolidColorBrush x:Key="outlineBrush" Color="{StaticResource ResourceKey=outlineColor}"/>
+        <local:OperationConverter x:Key="operationConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="2,2,1,1" BorderBrush="{StaticResource outlineBrush}"
+                Background="#FFE2F3EC" Padding="5,0" Margin="1">
+            <Grid>
+                <TextBlock TextAlignment="Right" Text="{Binding LastOperation, Converter={StaticResource operationConverter}}"
+                       FontSize="12" Padding="0,7" />
+                <TextBlock TextAlignment="Right" Text="{Binding Expression}" Margin="0,0,10,0"
+                       FontSize="12" Padding="0,7" />
+                <TextBlock TextAlignment="Right" Text="{Binding Display}"
+                       FontSize="30" VerticalAlignment="Bottom" Margin="1"/>
+            </Grid>
+        </Border>
+        <UniformGrid Grid.Row="1" Rows="6" Columns="4" Margin="1,1">
+            <!-- Функциональные клавиши -->
+            <Button Content="{StaticResource percentSymbol}" Style="{StaticResource unaryOpButtonStyle}"/>
+            <Button Content="CE" Style="{StaticResource binaryOpButtonStyle}"
+                    Command="{Binding NumberPressCommand}"/>
+            <Button Content="C" Style="{StaticResource binaryOpButtonStyle}"
+                    Command="{Binding NumberPressCommand}"/>
+            <Button Content="{StaticResource backSymbol}" Style="{StaticResource binaryOpButtonStyle}"
+                    Command="{Binding DeleteSymbolCommand}"/>
+
+            <Button Content="{StaticResource partWholeSymbol}" Style="{StaticResource unaryOpButtonStyle}"/>
+            <Button Content="{StaticResource squareSymbol}" Style="{StaticResource unaryOpButtonStyle}"/>
+            <Button Content="{StaticResource rootSymbol}" Style="{StaticResource unaryOpButtonStyle}"/>
+            <Button Content="{StaticResource divideSymbol}" Style="{StaticResource binaryOpButtonStyle}"/>
+            
+            <!-- Номерные клавиши -->
+            <Button Content="7" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="8" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="9" Style="{StaticResource numberButtonStyle}"/>
+            <!-- /Номерные клавиши -->
+            <!-- Функциональные клавиши -->
+            <Button Content="{StaticResource multipleSymbol}" Style="{StaticResource binaryOpButtonStyle}"/>
+            <!-- /Функциональные клавиши -->
+
+            <!-- Номерные клавиши -->
+            <Button Content="4" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="5" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="6" Style="{StaticResource numberButtonStyle}"/>
+            <!-- /Номерные клавиши -->
+            <!-- Функциональные клавиши -->
+            <Button Content="{StaticResource substractSymbol}" Style="{StaticResource binaryOpButtonStyle}"/>
+            <!-- /Функциональные клавиши -->
+            
+            <!-- Номерные клавиши -->
+            <Button Content="1" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="2" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="3" Style="{StaticResource numberButtonStyle}"/>
+            <!-- /Номерные клавиши -->
+            <!-- Функциональные клавиши -->
+            <Button Content="{StaticResource addSymbol}" Style="{StaticResource binaryOpButtonStyle}"/>
+            <!-- /Функциональные клавиши -->
+            
+            <!-- Номерные клавиши -->
+            <Button Content="+/-" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="0" Style="{StaticResource numberButtonStyle}"/>
+            <Button Content="," Style="{StaticResource numberButtonStyle}"/>
+            <!-- /Номерные клавиши -->
+            <!-- Функциональные клавиши -->
+            <Button Content="=" Style="{StaticResource equalButtonStyle}"
+                    Command="{Binding BinaryOperationPressCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content}"/>
+            <!-- /Функциональные клавиши -->
+        </UniformGrid>
+    </Grid>
+</Window>
+
